@@ -13,23 +13,21 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-"""Basisklasse für Entity-Klassen."""
+"""Enum für Mitgliedsstatus."""
 
-from typing import TYPE_CHECKING, Any
+from enum import StrEnum
 
-from sqlalchemy.orm import DeclarativeBase
-
-if TYPE_CHECKING:
-
-    class MappedAsDataclass:
-        """Mixin class ohne die Directiven von PEP 681."""
-
-        def __init__(self, *arg: Any, **kw: Any) -> None:
-            """Mixin class ohne die Directiven von PEP 681."""
-
-else:
-    from sqlalchemy.orm import MappedAsDataclass
+import strawberry
 
 
-class Base(MappedAsDataclass, DeclarativeBase):
-    """Basisklasse für Entity-Klassen als dataclass."""
+# StrEnum ab Python 3.11 (2022), abgeleitet von str
+# zusaetzlich als enum fuer das GraphQL-Schema
+@strawberry.enum
+class Mitgliedsstatus(StrEnum):
+    """Enum für Mitgliedsstatus."""
+
+    AKTIV = "A"
+    """Aktiv."""
+
+    INAKTIV = "I"
+    """Inaktiv."""

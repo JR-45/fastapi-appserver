@@ -13,23 +13,22 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-"""Basisklasse für Entity-Klassen."""
+"""Enum für Interessen."""
 
-from typing import TYPE_CHECKING, Any
+from enum import StrEnum
 
-from sqlalchemy.orm import DeclarativeBase
-
-if TYPE_CHECKING:
-
-    class MappedAsDataclass:
-        """Mixin class ohne die Directiven von PEP 681."""
-
-        def __init__(self, *arg: Any, **kw: Any) -> None:
-            """Mixin class ohne die Directiven von PEP 681."""
-
-else:
-    from sqlalchemy.orm import MappedAsDataclass
+import strawberry
 
 
-class Base(MappedAsDataclass, DeclarativeBase):
-    """Basisklasse für Entity-Klassen als dataclass."""
+@strawberry.enum
+class Interesse(StrEnum):
+    """Leseinteressen eines Mitglieds."""
+
+    ROMAN = "ROMAN"
+    SACHBUCH = "SACHBUCH"
+    SCIENCE_FICTION = "SCIENCE_FICTION"
+    FANTASY = "FANTASY"
+    KRIMI = "KRIMI"
+    THRILLER = "THRILLER"
+    BIOGRAFIE = "BIOGRAFIE"
+    KINDERBUCH = "KINDERBUCH"
