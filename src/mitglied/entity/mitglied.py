@@ -15,6 +15,7 @@
 
 """Entity-Klasse für Mitgliedsdaten."""
 
+from dataclasses import InitVar
 from datetime import date, datetime
 from typing import Any, Self
 
@@ -84,7 +85,7 @@ class Mitglied(Base):
     )
     """Die in einer 1:N Beziehung referenzierten Ausleihen."""
 
-    interessen: list[Interesse] | None = None
+    interessen: InitVar[list[Interesse] | None] = None
     """Die transistente Liste mit Interessen als Enum-Werte."""
 
     interessen_json: Mapped[list[str] | None] = mapped_column(
