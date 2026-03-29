@@ -71,9 +71,6 @@ class Mitglied(Base):
     beitrittsdatum: Mapped[date]
     """Das Beitrittsdatum des Mitglieds."""
 
-    interessen: list[Interesse] | None = None
-    """Die transistente Liste mit Interessen als Enum-Werte."""
-
     ausweis: Mapped[Ausweis | None] = relationship(
         back_populates="mitglied",
         innerjoin=True,
@@ -86,6 +83,9 @@ class Mitglied(Base):
         cascade="save-update, delete",
     )
     """Die in einer 1:N Beziehung referenzierten Ausleihen."""
+
+    interessen: list[Interesse] | None = None
+    """Die transistente Liste mit Interessen als Enum-Werte."""
 
     interessen_json: Mapped[list[str] | None] = mapped_column(
         JSON, name="interessen", init=False
