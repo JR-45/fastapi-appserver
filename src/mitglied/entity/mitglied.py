@@ -68,11 +68,11 @@ class Mitglied(Base):
     mitgliedsstatus: Mapped[Mitgliedsstatus | None]
     """Der optionale Mitgliedsstatus."""
 
-    interessen: list[Interesse] | None = None
-    """Die transistente Liste mit Interessen als Enum-Werte."""
-
     beitrittsdatum: Mapped[date]
     """Das Beitrittsdatum des Mitglieds."""
+
+    interessen: list[Interesse] | None = None
+    """Die transistente Liste mit Interessen als Enum-Werte."""
 
     ausweis: Mapped[Ausweis | None] = relationship(
         back_populates="mitglied",
