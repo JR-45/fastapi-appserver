@@ -15,7 +15,6 @@
 
 """Entity-Klasse für Mitgliedsdaten."""
 
-from dataclasses import InitVar
 from datetime import date, datetime
 from typing import Any, Self
 
@@ -69,7 +68,7 @@ class Mitglied(Base):
     mitgliedsstatus: Mapped[Mitgliedsstatus | None]
     """Der optionale Mitgliedsstatus."""
 
-    interessen: InitVar[list[Interesse] | None] = None
+    interessen: list[Interesse] | None = None
     """Die transistente Liste mit Interessen als Enum-Werte."""
 
     beitrittsdatum: Mapped[date]
