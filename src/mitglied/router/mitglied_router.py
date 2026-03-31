@@ -32,6 +32,4 @@ def get_by_id(
     """Suche mit der Mitglied-ID."""
     logger.debug("mitglied_id={}", mitglied_id)
     mitglied = service.find_by_id(mitglied_id=mitglied_id)
-    if mitglied is None:
-        return {"message": f"Kein Mitglied mit ID {mitglied_id} gefunden"}
     return {"mitglied": mitglied}
