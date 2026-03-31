@@ -24,11 +24,11 @@ import strawberry
 class Geschlecht(StrEnum):
     """Enum für Geschlecht."""
 
-    MAENNLICH = "M"
+    MAENNLICH = "MAENNLICH"
     """Männlich."""
 
-    WEIBLICH = "W"
+    WEIBLICH = "WEIBLICH"
     """Weiblich."""
 
-    DIVERS = "D"
+    DIVERS = "DIVERS"
     """Divers."""

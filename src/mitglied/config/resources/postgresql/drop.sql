@@ -13,21 +13,16 @@
 -- You should have received a copy of the GNU General Public License
 -- along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
--- https://www.postgresql.org/docs/current/sql-dropindex.html
 DROP INDEX IF EXISTS
-    adresse_mitglied_id_idx,
-    adresse_plz_idx,
-    rechnung_mitglied_id_idx,
+    ausweis_mitglied_id_idx,
+    ausleihe_mitglied_id_idx,
     mitglied_nachname_idx;
 
--- https://www.postgresql.org/docs/current/sql-droptable.html
 DROP TABLE IF EXISTS
-    adresse,
-    rechnung,
-    mitglied;
+    ausweis,
+    ausleihe,
+    mitglied CASCADE;
 
--- https://www.postgresql.org/docs/current/sql-droptype.html
 DROP TYPE IF EXISTS
     geschlecht,
-    familienstand,
-    facharzt;
+    mitgliedsstatus;

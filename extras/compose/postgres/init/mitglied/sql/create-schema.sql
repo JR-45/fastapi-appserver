@@ -15,10 +15,6 @@
 
 -- Aufruf:   psql --dbname=mitglied --username=mitglied --file=/init/mitglied/sql/create-schema.sql
 
--- https://www.postgresql.org/docs/devel/app-psql.html
--- https://www.postgresql.org/docs/current/ddl-schemas.html
--- https://www.postgresql.org/docs/current/ddl-schemas.html#DDL-SCHEMAS-CREATE
--- "user-private schema" (Default-Schema: public)
 CREATE SCHEMA IF NOT EXISTS AUTHORIZATION mitglied;
 
 ALTER ROLE mitglied SET search_path = 'mitglied';

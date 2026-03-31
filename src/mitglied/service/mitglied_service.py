@@ -3,6 +3,7 @@
 from loguru import logger
 
 from mitglied.entity.mitglied import Mitglied
+from mitglied.repository import MitgliedRepository, Session
 from mitglied.service.exceptions import NotFoundError
 
 __all__ = ["MitgliedService"]
@@ -10,6 +11,10 @@ __all__ = ["MitgliedService"]
 
 class MitgliedService:
     """Service-Klasse mit Geschäftslogik für Mitglied."""
+
+    def __init__(self, repo: MitgliedRepository) -> None:
+        """Konstruktor mit abhängigem MitgliedRepository."""
+        self.repo: MitgliedRepository = repo
 
     def find_by_id(self, mitglied_id: int) -> Mitglied:
         """Suche mit der Mitglied-ID.
@@ -19,14 +24,20 @@ class MitgliedService:
         :raises NotFoundError: Falls kein Mitglied gefunden wurde
         """
         logger.debug("mitglied_id={}", mitglied_id)
-        # TODO: später durch Repository ersetzen
-        raise NotFoundError(mitglied_id=mitglied_id)
+        with Session() as session:
+            mitglied = self.repo.find_by_id(mitglied_id=mitglied_id, session=session)
+            if mitglied is None:
+                logger.debug("Mitglied nicht gefunden: {}", mitglied_id)
+                raise NotFoundError(mitglied_id=mitglied_id)
+            logger.debug("{}", mitglied)
+            return mitglied
 
-    def find_alle(self) -> list[Mitglied]:
+    def find_all(self) -> list[Mitglied]:
         """Alle Mitglieder zurückgeben.
 
         :return: Liste aller Mitglieder
         """
-        logger.debug("find_alle")
-        # TODO: später durch Repository ersetzen
-        return []
+        with Session() as session:
+            mitglieder = self.repo.find_all(session=session)
+            logger.debug("{}", mitglieder)
+            return list(mitglieder)

@@ -15,17 +15,9 @@
 
 -- Aufruf:   psql --dbname=postgres --username=postgres --file=/init/mitglied/sql/create-db.sql
 
--- https://www.postgresql.org/docs/current/sql-createuser.html
--- https://www.postgresql.org/docs/current/sql-createrole.html
 CREATE USER mitglied PASSWORD 'p';
 
--- https://www.postgresql.org/docs/current/sql-createdatabase.html
 CREATE DATABASE mitglied;
-
--- https://www.postgresql.org/docs/current/role-attributes.html
--- https://www.postgresql.org/docs/current/ddl-priv.html
--- https://www.postgresql.org/docs/current/sql-grant.html
 GRANT ALL ON DATABASE mitglied TO mitglied;
 
--- https://www.postgresql.org/docs/current/sql-createtablespace.html
 CREATE TABLESPACE mitgliedspace OWNER mitglied LOCATION '/tablespace/mitglied';

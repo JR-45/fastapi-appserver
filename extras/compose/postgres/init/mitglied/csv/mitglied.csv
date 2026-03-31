@@ -1,0 +1,7 @@
+id;version;vorname;nachname;email;geburtsdatum;telefonnummer;geschlecht;mitgliedsstatus;beitrittsdatum;interessen;erzeugt;aktualisiert
+1;0;Admin;Admin;admin@acme.com;2003-11-19;+49-100-00000000;MAENNLICH;AKTIV;2026-01-01;null;2026-01-01 00:00:00;2026-01-01 00:00:00
+20;0;Osman;Abi;enbüyükcimbom@acme.tr;2026-06-05;+49-200-11111111;MAENNLICH;AKTIV;2025-01-02;"[""ROMAN"",""KRIMI""]";2025-01-02 00:00:00;2025-01-02 00:00:00
+30;0;Victor;Osimhen;gala1905@acme.edu;1988-05-20;+49-300-22222222;MAENNLICH;AKTIV;2025-01-03;"[""SACHBUCH"",""BIOGRAFIE""]";2025-01-03 00:00:00;2025-01-03 00:00:00
+40;0;Albert;Einstein;emc2@acme.com;1879-03-14;+49-400-33333333;MAENNLICH;INAKTIV;2025-01-04;"[""SACHBUCH"",""BIOGRAFIE""]";2025-01-04 00:00:00;2025-01-04 00:00:00
+50;0;Fener;Bahce;bok@acme.com;1907-10-21;+49-500-31313131;WEIBLICH;AKTIV;2025-01-05;"[""THRILLER""]";2025-01-05 00:00:00;2025-01-05 00:00:00
+60;0;Guido;VanRossum;python@acme.org;1956-01-31;+49-600-55555555;MAENNLICH;AKTIV;2025-01-06;null;2025-01-06 00:00:00;2025-01-06 00:00:00
