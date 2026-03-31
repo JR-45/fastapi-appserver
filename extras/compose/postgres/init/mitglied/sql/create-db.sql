@@ -13,16 +13,11 @@
 -- You should have received a copy of the GNU General Public License
 -- along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-DROP INDEX IF EXISTS
-    ausweis_mitglied_id_idx,
-    ausleihe_mitglied_id_idx,
-    mitglied_nachname_idx;
+-- Aufruf:   psql --dbname=postgres --username=postgres --file=/init/mitglied/sql/create-db.sql
 
-DROP TABLE IF EXISTS
-    ausweis,
-    ausleihe,
-    mitglied CASCADE;
+CREATE USER mitglied PASSWORD 'p';
 
-DROP TYPE IF EXISTS
-    geschlecht,
-    mitgliedsstatus;
+CREATE DATABASE mitglied;
+GRANT ALL ON DATABASE mitglied TO mitglied;
+
+CREATE TABLESPACE mitgliedspace OWNER mitglied LOCATION '/tablespace/mitglied';

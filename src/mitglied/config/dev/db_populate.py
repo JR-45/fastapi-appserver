@@ -113,7 +113,7 @@ class DbPopulateService:
 
     def _load_csv_files(self) -> None:
         logger.debug("begin")
-        tabellen: Final = ["mitglied", "adresse", "rechnung"]
+        tabellen: Final = ["mitglied", "ausweis", "ausleihe"]
         csv_path: Final = "/init/mitglied/csv"
         # siehe extras/compose/postgres/compose.init.yml
         with self.engine_admin.connect() as connection:
@@ -140,7 +140,7 @@ class DbPopulateService:
         copy_cmd: Final = Template(
             "COPY ${TABELLE} FROM '"
             + csv_path
-            + "/${TABELLE}.csv' (FORMAT csv, QUOTE '\"', DELIMITER ';', HEADER true);",
+            + "/${TABELLE}.csv' (FORMAT csv, QUOTE '\"', DELIMITER ';', HEADER true, NULL 'null');",
         ).substitute(TABELLE=tabelle)
         connection.execute(text(copy_cmd))
 
