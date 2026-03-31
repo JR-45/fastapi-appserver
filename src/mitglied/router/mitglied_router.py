@@ -6,13 +6,15 @@ from fastapi import APIRouter, Depends
 from loguru import logger
 
 from mitglied.service.mitglied_service import MitgliedService
+from mitglied.repository import MitgliedRepository
 
 router: Final = APIRouter(tags=["Mitglieder"])
 
 
 def get_service() -> MitgliedService:
     """Service als Dependency."""
-    return MitgliedService()
+    repo = MitgliedRepository()
+    return MitgliedService(repo=repo)
 
 
 @router.get("")
@@ -21,7 +23,7 @@ def get_alle(
 ) -> list:
     """Alle Mitglieder zurückgeben."""
     logger.debug("GET alle Mitglieder")
-    return service.find_alle()
+    return service.find_all()
 
 
 @router.get("/{mitglied_id}")

@@ -43,7 +43,8 @@ class Ausleihe(Base):
     mitglied_id: Mapped[int] = mapped_column(ForeignKey("mitglied.id"))
     """ID des zugehörigen Mitglieds als Fremdschlüssel in der DB-Tabelle."""
 
-    mitglied: Mapped[Mitglied] = relationship(  # noqa: F821 # ty: ignore[unresolved-reference] # pyright: ignore[reportUndefinedVariable ]
+    mitglied = relationship(
+        "Mitglied",
         back_populates="ausleihen",
     )
     """Das zugehörige transiente Mitglied-Objekt."""

@@ -26,8 +26,8 @@ import strawberry
 class Mitgliedsstatus(StrEnum):
     """Enum für Mitgliedsstatus."""
 
-    AKTIV = "A"
+    AKTIV = "AKTIV"
     """Aktiv."""
 
-    INAKTIV = "I"
+    INAKTIV = "INAKTIV"
     """Inaktiv."""
