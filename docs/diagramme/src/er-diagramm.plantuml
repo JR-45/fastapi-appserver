@@ -1,0 +1,64 @@
+' Copyright (C) 2023 - present Juergen Zimmermann, Hochschule Karlsruhe
+'
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+'
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+'
+' You should have received a copy of the GNU General Public License
+' along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+' Preview durch <Alt>d
+
+@startuml ER Diagramm
+
+' hide the spot
+hide circle
+
+' evtl. Prbleme mit Kraehenfuessen vermeiden
+skinparam linetype ortho
+
+entity "Mitglied" {
+  * id : integer <<generated>>
+  --
+  * version: integer
+  * vorname : text
+  * nachname : text
+  * email : text <<unique>>
+  * geburtsdatum: date
+  * telefonnummer: text
+  * geschlecht: Geschlecht
+  * mitgliedstatus: Mitgliedstatus
+  * interessen: JSON
+  * beitritsdatum: date
+  * erzeugt: timestamp
+  * aktualisiert: timestamp
+}
+
+entity "Ausweis" {
+  * id : integer <<generated>>
+  --
+  * ausstellungsdatum : date
+  * ablaufdatum : date
+  * **mitglied_id**: integer <<FK>>
+}
+
+entity "Ausleihe" {
+  * id : integer <<generated>>
+  --
+  * ausleihdatum : date
+  * rueckgabedatum : date
+  * **mitglied_id**: integer <<FK>>
+}
+
+Mitglied ||.left.|| Ausweis
+Mitglied ||..o{ Ausleihe
+
+footer (c) Murat Yahsi, Jeton Rama
+
+@enduml
