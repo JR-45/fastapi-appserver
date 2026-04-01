@@ -17,6 +17,8 @@ site
 src/mitglied/**/__pycache__
 src/mitglied/mitglied.egg-info
 tests/**/__pycache__
+.DS_Store
+src/**/.DS_Store
 
 .coverage
 report.html

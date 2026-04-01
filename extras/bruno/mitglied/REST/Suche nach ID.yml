@@ -1,7 +1,7 @@
 info:
-  name: Nicht-vorhandene ID 999999
+  name: "Suche nach ID "
   type: http
-  seq: 3
+  seq: 2
 
 http:
   method: GET
@@ -11,15 +11,24 @@ http:
       value: application/json
   params:
     - name: id
-      value: "999999"
+      value: "20"
       type: path
   auth: inherit
 
 runtime:
+  variables:
+    - name: restUrl
+      value: http://127.0.0.1:8000/rest
   assertions:
     - expression: res.status
       operator: eq
-      value: "404"
+      value: "200"
+    - expression: res.headers['content-type']
+      operator: eq
+      value: application/json
+    - expression: res.body.id
+      operator: eq
+      value: "1"
 
 settings:
   encodeUrl: true

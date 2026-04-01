@@ -27,19 +27,19 @@ group "default" {
 }
 
 target "hardened" {
-    tags = ["docker.io/juergenzimmermann/mitglied:2026.4.1-hardened"]
+    tags = ["docker.io/murat_jeton/mitglied:2026.4.1-hardened"]
     #dockerfile = "Dockerfile"
     #no-cache = true
 }
 
 target "trixie" {
-    tags = ["docker.io/juergenzimmermann/mitglied:2026.4.1-trixie"]
+    tags = ["docker.io/murat_jeton/mitglied:2026.4.1-trixie"]
     dockerfile = "Dockerfile.trixie"
     #no-cache = true
 }
 
 target "alpine" {
-    tags = ["docker.io/juergenzimmermann/mitglied:2026.4.1-alpine"]
+    tags = ["docker.io/murat_jeton/mitglied:2026.4.1-alpine"]
     dockerfile = "Dockerfile.alpine"
     #no-cache = true
 }
