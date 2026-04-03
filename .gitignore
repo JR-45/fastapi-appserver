@@ -28,3 +28,5 @@ dependency-check-report.html
 sonar-project.properties
 extras/compose/db/postgres/db_password.txt
 src/mitglied/config/resources/tls/private-key.pem
+.DS_Store
+src/**/.DS_Store
