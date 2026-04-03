@@ -1,5 +1,11 @@
 """FastAPI-Anwendungspaket."""
 
-from mitglied.__main__ import main
+from mitglied.asgi_server import run
+from mitglied.fastapi_app import app
 
-__all__ = ["main"]
+__all__: list[str] = ["app", "main"]
+
+
+def main():  # noqa: RUF067
+    """main Funktion fuer den Start der Anwendung"""
+    run()

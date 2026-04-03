@@ -79,7 +79,8 @@ class Mitglied(Base):
     )
     """Die in eienr 1:1 Beziehung referenzierte Ausweis."""
 
-    ausleihen: Mapped[list[Ausleihe]] = relationship(
+    ausleihen = relationship(
+        "Ausleihe",
         back_populates="mitglied",
         cascade="save-update, delete",
     )

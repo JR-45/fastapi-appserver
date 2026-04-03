@@ -59,7 +59,7 @@ csv = "extras/compose/postgres/init/mitglied/csv/mitglied.csv"
 
 [graphql]
 # locust: auskommentieren
-graphiql-enabled = true
+# graphiql-enabled = true
 
 [dev]
 db-populate = true

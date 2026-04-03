@@ -13,16 +13,8 @@
 -- You should have received a copy of the GNU General Public License
 -- along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-DROP INDEX IF EXISTS
-    ausweis_mitglied_id_idx,
-    ausleihe_mitglied_id_idx,
-    mitglied_nachname_idx;
+-- Aufruf:   psql --dbname=mitglied --username=mitglied --file=/init/mitglied/sql/create-schema.sql
 
-DROP TABLE IF EXISTS
-    ausweis,
-    ausleihe,
-    mitglied CASCADE;
+CREATE SCHEMA IF NOT EXISTS AUTHORIZATION mitglied;
 
-DROP TYPE IF EXISTS
-    geschlecht,
-    mitgliedsstatus;
+ALTER ROLE mitglied SET search_path = 'mitglied';
