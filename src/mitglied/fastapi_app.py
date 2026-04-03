@@ -8,6 +8,8 @@ from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.responses import JSONResponse
 from loguru import logger
 
+from mitglied.entity.base import Base
+from mitglied.repository.session_factory import engine
 from mitglied.router.mitglied_router import router as mitglied_router
 from mitglied.service.exceptions import (
     EmailExistsError,
@@ -24,6 +26,7 @@ if TYPE_CHECKING:
 @asynccontextmanager
 async def lifespan(_app: FastAPI) -> AsyncGenerator[None]:  # noqa: RUF029
     """Startup und Shutdown."""
+    Base.metadata.create_all(bind=engine)
     logger.info("Server startet...")
     yield
     logger.info("Server wird heruntergefahren...")

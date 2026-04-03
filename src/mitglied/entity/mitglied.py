@@ -29,7 +29,6 @@ from sqlalchemy.orm import (
     relationship,
 )
 
-from mitglied.entity.ausleihe import Ausleihe
 from mitglied.entity.ausweis import Ausweis
 from mitglied.entity.base import Base
 from mitglied.entity.geschlecht import Geschlecht
@@ -45,6 +44,7 @@ class Mitglied(Base):
     id: Mapped[int | None] = mapped_column(
         Identity(start=1000),
         primary_key=True,
+        nullable=False,
     )
     """Die generierte ID gemäß der zugehörigen IDENTITY-Spalte."""
 
