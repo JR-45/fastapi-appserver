@@ -80,3 +80,22 @@ class MitgliedRepository:
         anzahl: Final = session.scalar(statement)
         logger.debug("anzahl={}", anzahl)
         return anzahl is not None and anzahl > 0
+
+    def create(self, mitglied: Mitglied, session: Session) -> Mitglied:
+        """Speichere ein neues Mitglied ab.
+
+        :param mitglied: Die Daten des neuen Mitglieds ohne ID
+        :param session: Session für SQLAlchemy
+        :return: Das neu angelegte Mitglied mit generierter ID
+        :rtype: Mitglied
+        """
+        logger.debug(
+            "mitglied={}, mitglied.ausweis={}, mitglied.ausleihen={}",
+            mitglied,
+            mitglied.ausweis,
+            mitglied.ausleihen,
+        )
+        session.add(instance=mitglied)
+        session.flush(objects=[mitglied])
+        logger.debug("mitglied_id={}", mitglied.id)
+        return mitglied
