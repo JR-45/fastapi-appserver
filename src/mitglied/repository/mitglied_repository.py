@@ -35,7 +35,7 @@ class MitgliedRepository:
         logger.debug("{}", mitglied)
         return mitglied
 
-    def _find_all(self, pageable: Pageable, session: Session) -> Slice[Mitglied]:
+    def find_all(self, pageable: Pageable, session: Session) -> Slice[Mitglied]:
         """Suche nach allen Mitgliedern.
 
         :param pageable: Pagination Parameter

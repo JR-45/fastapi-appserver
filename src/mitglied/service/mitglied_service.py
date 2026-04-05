@@ -4,6 +4,7 @@ from loguru import logger
 
 from mitglied.entity.mitglied import Mitglied
 from mitglied.repository import MitgliedRepository, Session
+from mitglied.repository.pageable import Pageable
 from mitglied.service.exceptions import NotFoundError
 
 __all__ = ["MitgliedService"]
@@ -38,6 +39,7 @@ class MitgliedService:
         :return: Liste aller Mitglieder
         """
         with Session() as session:
-            mitglieder = self.repo.find_all(session=session)
+            pageable = Pageable(size=0, number=0)
+            mitglieder = self.repo.find_all(pageable=pageable, session=session)
             logger.debug("{}", mitglieder)
-            return list(mitglieder)
+            return list(mitglieder.content)
