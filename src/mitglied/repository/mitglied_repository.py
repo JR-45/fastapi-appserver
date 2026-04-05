@@ -35,6 +35,42 @@ class MitgliedRepository:
         logger.debug("{}", mitglied)
         return mitglied
 
+    def find(
+        self,
+        suchparameter: Mapping[str, str],
+        pageable: Pageable,
+        session: Session,
+    ) -> Slice[Mitglied]:
+        """Suche mit Suchparameter.
+
+        :param suchparameter: Suchparameter als Dictionary
+        :param pageable: Anzahl Datensätze und Seitennummer
+        :param session: Session für SQLAlchemy
+        :return: Tupel, d.h. readonly Liste, der gefundenen Mitglieder oder leeres Tupel
+        :rtype: Slice[Mitglied]
+        """
+        log_str: Final = "{}"
+        logger.debug(log_str, suchparameter)
+        if not suchparameter:
+            return self.find_all(pageable=pageable, session=session)
+
+        for key, value in suchparameter.items():
+            if key == "email":
+                mitglied = self.find_by_email(email=value, session=session)
+                logger.debug(log_str, mitglied)
+                return (
+                    Slice(content=(mitglied,), total_elements=1)
+                    if mitglied is not None
+                    else Slice(content=(), total_elements=0)
+                )
+            if key == "nachname":
+                mitglieder = self.find_by_nachname(
+                    teil=value, pageable=pageable, session=session
+                )
+                logger.debug(log_str, mitglieder)
+                return mitglieder
+        return Slice(content=(), total_elements=0)
+
     def find_all(self, pageable: Pageable, session: Session) -> Slice[Mitglied]:
         """Suche nach allen Mitgliedern.
 
@@ -60,6 +96,62 @@ class MitgliedRepository:
         mitglied_slice: Final = Slice(content=tuple(mitglieder), total_elements=anzahl)
         logger.debug("mitglied_slice={}", mitglied_slice)
         return mitglied_slice
+
+    def find_by_email(self, email: str, session: Session) -> Mitglied | None:
+        """Einen Mitglied anhand der Emailadresse suchen.
+
+        :param email: Emailadresse
+        :param session: Session für SQLAlchemy
+        :return: Gefundener Mitglied, falls es einen Mitglied gibt, sonst None
+        :rtype: Mitglied | None
+        """
+        logger.debug("email={}", email)  # NOSONAR
+        statement: Final = (
+            select(Mitglied)
+            .options(joinedload(Mitglied.ausweis))
+            .where(Mitglied.email == email)
+        )
+        mitglied: Final = session.scalar(statement)
+        logger.debug("{}", mitglied)
+        return mitglied
+
+    def find_by_nachname(
+        self,
+        teil: str,
+        pageable: Pageable,
+        session: Session,
+    ) -> Slice[Mitglied]:
+        logger.debug("teil={}", teil)
+        offset = pageable.number * pageable.size
+        statement: Final = (
+            (
+                select(Mitglied)
+                .options(joinedload(Mitglied.ausweis))
+                .filter(Mitglied.nachname.ilike(f"%{teil}%"))
+                .limit(pageable.size)
+                .offset(offset)
+            )
+            if pageable.size != 0
+            else (
+                select(Mitglied)
+                .options(joinedload(Mitglied.ausweis))
+                .filter(Mitglied.nachname.ilike(f"%{teil}%"))
+            )
+        )
+        mitglieder: Final = session.scalars(statement).all()
+        anzahl: Final = self.count_rows_nachname(teil, session)
+        mitglied_slice: Final = Slice(content=tuple(mitglieder), total_elements=anzahl)
+        logger.debug("{}", mitglied_slice)
+        return mitglied_slice
+
+    def count_rows_nachname(self, teil: str, session: Session) -> int:
+        statement: Final = (
+            select(func.count())
+            .select_from(Mitglied)
+            .filter(Mitglied.nachname.ilike(f"%{teil}%"))
+        )
+        count: Final = session.execute(statement).scalar()
+        return count if count is not None else 0
 
     def _count_all_rows(self, session: Session) -> int:
         statement: Final = select(func.count()).select_from(Mitglied)
