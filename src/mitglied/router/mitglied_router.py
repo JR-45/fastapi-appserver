@@ -85,5 +85,10 @@ def _mitglied_slice_to_page(
 def _mitglied_to_dict(mitglied: MitgliedDTO) -> dict[str, Any]:
     mitglied_dict: Final = asdict(obj=mitglied)
     mitglied_dict.pop("version")
-    mitglied_dict.update({"geburtsdatum": mitglied.geburtsdatum.isoformat()})
+    mitglied_dict.update(
+        {
+            "geburtsdatum": mitglied.geburtsdatum.isoformat(),
+            "beitrittsdatum": mitglied.beitrittsdatum.isoformat(),
+        }
+    )
     return mitglied_dict

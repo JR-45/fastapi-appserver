@@ -29,8 +29,6 @@ class MitgliedDTO:
     mitgliedsstatus: Mitgliedsstatus | None
     beitrittsdatum: date
     interessen: list[Interesse]
-    erzeugt: datetime | None
-    aktualisiert: datetime | None
 
     def __init__(self, mitglied: Mitglied):
         """Initialisierung von MitgliedDTO durch ein Entity-Objekt von Mitglied.
