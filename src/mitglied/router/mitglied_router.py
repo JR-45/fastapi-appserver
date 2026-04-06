@@ -7,18 +7,12 @@ from fastapi import APIRouter, Depends, Request
 from fastapi.responses import JSONResponse
 from loguru import logger
 
-from mitglied.repository import MitgliedRepository, Pageable, Slice
+from mitglied.repository import Pageable, Slice
 from mitglied.router.page import Page
-from mitglied.service.mitglied_dto import MitgliedDTO
-from mitglied.service.mitglied_service import MitgliedService
+from mitglied.service import MitgliedService, MitgliedDTO
+from mitglied.router.dependencies import get_service
 
 router: Final = APIRouter(tags=["Mitglieder"])
-
-
-def get_service() -> MitgliedService:
-    """Service als Dependency."""
-    repo = MitgliedRepository()
-    return MitgliedService(repo=repo)
 
 
 @router.get("")
