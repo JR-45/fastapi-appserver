@@ -37,6 +37,5 @@ class AusleiheModel(BaseModel):
         ausleihe_dict = self.model_dump()
         ausleihe_dict["id"] = None
         ausleihe_dict["mitglied_id"] = None
-        ausleihe_dict["mitglied"] = None
 
         return Ausleihe(**ausleihe_dict)

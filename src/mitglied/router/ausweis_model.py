@@ -37,6 +37,5 @@ class AusweisModel(BaseModel):
         ausweis_dict = self.model_dump()
         ausweis_dict["id"] = None
         ausweis_dict["mitglied_id"] = None
-        ausweis_dict["mitglied"] = None
 
         return Ausweis(**ausweis_dict)
