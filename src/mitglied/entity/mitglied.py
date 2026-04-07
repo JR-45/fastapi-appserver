@@ -29,6 +29,7 @@ from sqlalchemy.orm import (
     relationship,
 )
 
+from mitglied.entity.ausleihe import Ausleihe
 from mitglied.entity.ausweis import Ausweis
 from mitglied.entity.base import Base
 from mitglied.entity.geschlecht import Geschlecht
@@ -79,14 +80,13 @@ class Mitglied(Base):
     )
     """Die in eienr 1:1 Beziehung referenzierte Ausweis."""
 
-    ausleihen = relationship(
-        "Ausleihe",
+    ausleihen: Mapped[list[Ausleihe]] = relationship(
         back_populates="mitglied",
         cascade="save-update, delete",
     )
     """Die in einer 1:N Beziehung referenzierten Ausleihen."""
 
-    interessen: InitVar[list[Interesse] | None] = None
+    interessen: InitVar[list[Interesse] | None]
     """Die transistente Liste mit Interessen als Enum-Werte."""
 
     interessen_json: Mapped[list[str] | None] = mapped_column(
@@ -179,7 +179,6 @@ class Mitglied(Base):
             + f"beitrittsdatum={self.beitrittsdatum}, "
             + f"geschlecht={self.geschlecht}, "
             + f"mitgliedsstatus={self.mitgliedsstatus}, "
-            + f"interessen={self.interessen}, "
             + f"version={self.version}, "
             + f"erzeugt={self.erzeugt}, "
             + f"aktualisiert={self.aktualisiert})"

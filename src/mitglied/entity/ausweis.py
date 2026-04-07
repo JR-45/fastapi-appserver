@@ -54,5 +54,5 @@ class Ausweis(Base):
         """Ausgabe eines Ausweises als String ohne die Mitgliedsdaten."""
         return (
             f"Ausweis(id={self.id}, ausstellungsdatum={self.ausstellungsdatum},"
-            + f"ablaufdatum={self.ablaufdatum}"
+            + f"ablaufdatum={self.ablaufdatum})"
         )
