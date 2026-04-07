@@ -11,7 +11,7 @@ from loguru import logger
 from mitglied.entity.base import Base
 from mitglied.graphql_api import graphql_router
 from mitglied.repository.session_factory import engine
-from mitglied.router.mitglied_router import router as mitglied_router
+from mitglied.router import mitglied_router, mitglied_write_router
 from mitglied.service.exceptions import (
     EmailExistsError,
     ForbiddenError,
@@ -38,6 +38,8 @@ app: Final = FastAPI(lifespan=lifespan)
 app.add_middleware(GZipMiddleware, minimum_size=500)
 
 app.include_router(mitglied_router, prefix="/rest")
+
+app.include_router(mitglied_write_router, prefix="/rest")
 
 app.include_router(graphql_router, prefix="/graphql")
 
