@@ -9,6 +9,7 @@ from mitglied.service.exceptions import (
 )
 from mitglied.service.mitglied_dto import MitgliedDTO
 from mitglied.service.mitglied_service import MitgliedService
+from mitglied.service.mitglied_write_service import MitgliedWriteService
 
 __all__ = [
     "EmailExistsError",
@@ -18,4 +19,5 @@ __all__ = [
     "VersionOutdatedError",
     "MitgliedDTO",
     "MitgliedService",
+    "MitgliedWriteService",
 ]

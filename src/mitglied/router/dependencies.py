@@ -5,7 +5,7 @@ from typing import Annotated
 from fastapi import Depends
 
 from mitglied.repository import MitgliedRepository
-from mitglied.service import MitgliedService
+from mitglied.service import MitgliedService, MitgliedWriteService
 
 
 def get_repository() -> MitgliedRepository:
@@ -22,3 +22,10 @@ def get_service(
 ) -> MitgliedService:
     """Factory-Funktion für MitgliedService."""
     return MitgliedService(repo=repo)
+
+
+def get_write_service(
+    repo: Annotated[MitgliedRepository, Depends(get_repository)],
+) -> MitgliedWriteService:
+    """Factory-Funktion für MitgliedWriteService."""
+    return MitgliedWriteService(repo=repo)
