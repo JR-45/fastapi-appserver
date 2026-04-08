@@ -33,3 +33,4 @@ src/mitglied/config/resources/tls/private-key.pem
 extras/compose/postgres/init/tls/
 extras/compose/postgres/tls/
 extras/compose/postgres/password.txt
+extras/compose/keycloak/tls/
