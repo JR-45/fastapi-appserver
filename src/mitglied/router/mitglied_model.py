@@ -16,7 +16,7 @@ __all__ = ["MitgliedModel"]
 class MitgliedModel(MitgliedUpdateModel):
     """Pydantic-Model für die Mitgliedsdaten."""
 
-    ausweis: AusweisModel
+    ausweis: AusweisModel | None
     """Die zugehörige Ausweisdaten."""
     ausleihen: list[AusleiheModel]
     """Die Liste der Ausleihvorgänge."""
@@ -34,7 +34,7 @@ class MitgliedModel(MitgliedUpdateModel):
         mitglied_dict["interessen"] = self.interessen
 
         mitglied: Final = Mitglied(**mitglied_dict)
-        mitglied.ausweis = self.ausweis.to_ausweis()
+        mitglied.ausweis = self.ausweis.to_ausweis() if self.ausweis else None
         mitglied.ausleihen = [
             ausleihe_model.to_ausleihe() for ausleihe_model in self.ausleihen
         ]

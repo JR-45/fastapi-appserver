@@ -12,7 +12,13 @@ from mitglied.entity.interesse import Interesse
 from mitglied.entity.mitglied import Mitglied
 from mitglied.entity.mitgliedsstatus import Mitgliedsstatus
 
-__all__ = ["AusweisType", "MitgliedType"]
+__all__ = [
+    "AusweisInput",
+    "AusweisType",
+    "CreatePayload",
+    "MitgliedInput",
+    "MitgliedType",
+]
 
 
 @strawberry.type
@@ -73,3 +79,34 @@ class MitgliedType:
                 AusweisType.from_entity(mitglied.ausweis) if mitglied.ausweis else None
             ),
         )
+
+
+@strawberry.input
+class AusweisInput:
+    """Input für einen neuen Ausweis."""
+
+    ausstellungsdatum: date
+    ablaufdatum: date
+
+
+@strawberry.input
+class MitgliedInput:
+    """Input für ein neues Mitglied."""
+
+    vorname: str
+    nachname: str
+    email: str
+    geburtsdatum: date
+    telefonnummer: str
+    beitrittsdatum: date
+    geschlecht: Geschlecht | None = None
+    mitgliedsstatus: Mitgliedsstatus | None = None
+    interessen: list[Interesse] | None = None
+    ausweis: AusweisInput | None = None
+
+
+@strawberry.type
+class CreatePayload:
+    """Resultat wenn ein neues Mitglied angelegt wurde."""
+
+    id: int
