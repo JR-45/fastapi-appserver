@@ -1,0 +1,59 @@
+info:
+  name: Mitglied ändern
+  type: http
+  seq: 4
+
+http:
+  method: PUT
+  url: "{{restUrl}}/:id"
+  params:
+    - name: id
+      value: "30"
+      type: path
+  body:
+    type: json
+    data: |
+      {
+        "vorname": "Max",
+        "nachname": "Mustermann",
+        "email": "max.mustermannnnn@example.com",
+        "geburtsdatum": "1990-05-15",
+        "telefonnummer": "+49123456798",
+        "geschlecht": "MAENNLICH",
+        "mitgliedsstatus": "AKTIV",
+        "beitrittsdatum": "2023-01-31",
+        "interessen": [
+          "SCIENCE_FICTION",
+          "ROMAN"
+        ],
+        "ausweis": {
+          "ausstellungsdatum": "2023-01-31",
+          "ablaufdatum": "2028-01-31"
+        },
+        "ausleihen": [
+          {
+            "ausleihdatum": "2023-05-01",
+            "rueckgabedatum": "2023-05-15"
+          }
+        ]
+      }
+  auth: inherit
+
+runtime:
+  variables:
+    - name: restUrl
+      value: https://127.0.0.1:8000/rest
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "204"
+    - expression: res.body
+      operator: isString
+    - expression: res.body
+      operator: isEmpty
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
