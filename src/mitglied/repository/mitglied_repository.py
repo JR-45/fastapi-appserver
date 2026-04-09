@@ -191,3 +191,21 @@ class MitgliedRepository:
         session.flush(objects=[mitglied])
         logger.debug("mitglied_id={}", mitglied.id)
         return mitglied
+
+    def update(self, mitglied: Mitglied, session: Session) -> Mitglied | None:
+        """Aktualisiere ein Mitglied.
+
+        :param mitglied: Die neuen Mitgliedsdaten
+        :param session: Session für SQLAlchemy
+        :return: Das aktualisierte Mitglied oder None, falls kein Mitglied mit der ID
+        existiert
+        :rtype: Mitglied | None
+        """
+        logger.debug("{}", mitglied)
+
+        if (
+            mitglied_db := self.find_by_id(mitglied_id=mitglied.id, session=session)
+        ) is None:
+            return None
+        logger.debug("{}", mitglied_db)
+        return mitglied_db
