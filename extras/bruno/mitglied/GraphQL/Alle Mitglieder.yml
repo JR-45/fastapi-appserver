@@ -1,7 +1,7 @@
 info:
-  name: Suche nach ID
+  name: Alle Mitglieder
   type: graphql
-  seq: 2
+  seq: 1
 http:
   method: POST
   url: https://127.0.0.1:8000/graphql
@@ -13,7 +13,7 @@ body:
   graphql:
     query: |
       {
-        mitglied(mitgliedId: "1") {
+        mitglieder {
           id
           vorname
           nachname
