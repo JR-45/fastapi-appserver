@@ -2,15 +2,11 @@ info:
   name: Alle Mitglieder
   type: graphql
   seq: 1
-http:
+
+graphql:
   method: POST
   url: https://127.0.0.1:8000/graphql
-  headers:
-    - name: Content-Type
-      value: application/json
-  auth: inherit
-body:
-  graphql:
+  body:
     query: |
       {
         mitglieder {
@@ -20,3 +16,9 @@ body:
           email
         }
       }
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

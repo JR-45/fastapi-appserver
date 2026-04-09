@@ -4,7 +4,7 @@ info:
   seq: 3
 http:
   method: POST
-  url: https://127.0.0.1:8000/graphql
+  url: https://\{\{host\}\}/graphql
   headers:
     - name: Content-Type
       value: application/json

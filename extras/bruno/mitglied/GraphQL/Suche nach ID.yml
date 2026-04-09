@@ -2,15 +2,11 @@ info:
   name: Suche nach ID
   type: graphql
   seq: 2
-http:
+
+graphql:
   method: POST
   url: https://127.0.0.1:8000/graphql
-  headers:
-    - name: Content-Type
-      value: application/json
-  auth: inherit
-body:
-  graphql:
+  body:
     query: |
       {
         mitglied(mitgliedId: "1") {
@@ -18,5 +14,13 @@ body:
           vorname
           nachname
           email
+          geburtsdatum
+          telefonnummer
         }
       }
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
