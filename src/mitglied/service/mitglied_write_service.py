@@ -6,7 +6,7 @@ from loguru import logger
 
 from mitglied.entity.mitglied import Mitglied
 from mitglied.repository import MitgliedRepository, Session
-from mitglied.service.exceptions import EmailExistsError
+from mitglied.service.exceptions import EmailExistsError, NotFoundError
 from mitglied.service.mitglied_dto import MitgliedDTO
 
 __all__ = ["MitgliedWriteService"]
@@ -36,6 +36,8 @@ class MitgliedWriteService:
 
         email: Final = mitglied.email
 
+        # durch "with" erhaelt man einen "Context Manager", der die Ressource/Session
+        # am Endes des Blocks schliesst
         with Session() as session:
             if self.repo.exists_email(email=email, session=session):
                 raise EmailExistsError(email=email)
@@ -46,3 +48,35 @@ class MitgliedWriteService:
 
         logger.debug("mitglied_dto={}", mitglied_dto)
         return mitglied_dto
+
+    def update(self, mitglied: Mitglied, mitglied_id: int) -> MitgliedDTO:
+        """Ein Mitglied aktualisieren.
+
+        :param mitglied: Die neuen Daten
+        :param mitglied_id: ID des zu aktualisierenden Mitglieds
+        :return: Der aktualisierte Mitglied
+        :rtype: MitgliedDTO
+        :raises NotFoundError: Falls der zu aktualisierende Mitglied nicht existiert
+        """
+        logger.debug("mitglied_id={}, {}", mitglied_id, mitglied)
+        with Session() as session:
+            if (
+                mitglied_db := self.repo.find_by_id(
+                    mitglied_id=mitglied_id, session=session
+                )
+            ) is None:
+                raise NotFoundError(mitglied_id)
+
+            mitglied_db.set(mitglied)
+
+            if (
+                mitglied_updated := self.repo.update(
+                    mitglied=mitglied_db, session=session
+                )
+            ) is None:
+                raise NotFoundError(mitglied_id)
+
+            session.commit()
+            mitglied_dto: Final = MitgliedDTO(mitglied_updated)
+            logger.debug("mitglied_dto={}", mitglied_dto)
+            return mitglied_dto
