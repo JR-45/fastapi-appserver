@@ -1,0 +1,30 @@
+meta:
+  name: Neues Mitglied
+  type: graphql
+  seq: 3
+http:
+  method: POST
+  url: https://\{\{host\}\}/graphql
+  body: graphql
+  auth: inherit
+body:
+  graphql:
+    query: |
+      mutation {
+        create(mitgliedInput: {
+          vorname: "Max"
+          nachname: "Mustermann"
+          email: "max@acme.com"
+          geburtsdatum: "1990-01-01"
+          telefonnummer: "+49-700-12345678"
+          beitrittsdatum: "2026-01-01"
+          geschlecht: MAENNLICH
+          mitgliedsstatus: AKTIV
+          ausweis: {
+            ausstellungsdatum: "2026-01-01"
+            ablaufdatum: "2028-01-01"
+          }
+        }) {
+          id
+        }
+      }

@@ -1,0 +1,6 @@
+info:
+  name: GraphQL
+  type: folder
+  seq: 2
+request:
+  auth: inherit

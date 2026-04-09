@@ -1,0 +1,22 @@
+meta:
+  name: Suche nach ID
+  type: graphql
+  seq: 2
+http:
+  method: POST
+  url: https://\{\{host\}\}/graphql
+  body: graphql
+  auth: inherit
+body:
+  graphql:
+    query: |
+      {
+        mitglied(mitgliedId: "1") {
+          id
+          vorname
+          nachname
+          email
+          geburtsdatum
+          telefonnummer
+        }
+      }
