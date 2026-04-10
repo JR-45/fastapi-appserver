@@ -18,7 +18,7 @@ http:
 runtime:
   variables:
     - name: restUrl
-      value: http://127.0.0.1:8000/rest
+      value: https://127.0.0.1:8000/rest
   assertions:
     - expression: res.status
       operator: eq

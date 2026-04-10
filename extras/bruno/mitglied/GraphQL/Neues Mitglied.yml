@@ -2,23 +2,19 @@ info:
   name: Neues Mitglied
   type: graphql
   seq: 3
-http:
+
+graphql:
   method: POST
-  url: https://\{\{host\}\}/graphql
-  headers:
-    - name: Content-Type
-      value: application/json
-  auth: inherit
-body:
-  graphql:
-    query: |
+  url: "{{restUrl}}"
+  body:
+    query: |-
       mutation {
         create(mitgliedInput: {
-          vorname: "Max"
-          nachname: "Mustermann"
-          email: "max2@acme.com"
-          geburtsdatum: "1990-01-01"
-          telefonnummer: "+49-700-99999999"
+          vorname: "Francis"
+          nachname: "Powers"
+          email: "u2pilot@cia.gov"
+          geburtsdatum: "1929-08-17"
+          telefonnummer: "+49-800-19600501"
           beitrittsdatum: "2026-01-01"
           geschlecht: MAENNLICH
           mitgliedsstatus: AKTIV
@@ -30,3 +26,14 @@ body:
           id
         }
       }
+
+runtime:
+  variables:
+    - name: restUrl
+      value: https://127.0.0.1:8000/graphql
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

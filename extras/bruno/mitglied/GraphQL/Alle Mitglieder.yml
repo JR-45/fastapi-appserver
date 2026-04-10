@@ -5,7 +5,7 @@ info:
 
 graphql:
   method: POST
-  url: https://127.0.0.1:8000/graphql
+  url: "{{restUrl}}"
   body:
     query: |
       {
@@ -16,6 +16,11 @@ graphql:
           email
         }
       }
+
+runtime:
+  variables:
+    - name: restUrl
+      value: https://127.0.0.1:8000/graphql
 
 settings:
   encodeUrl: true
