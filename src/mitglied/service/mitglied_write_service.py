@@ -6,7 +6,11 @@ from loguru import logger
 
 from mitglied.entity.mitglied import Mitglied
 from mitglied.repository import MitgliedRepository, Session
-from mitglied.service.exceptions import EmailExistsError, NotFoundError
+from mitglied.service.exceptions import (
+    EmailExistsError,
+    NotFoundError,
+    VersionOutdatedError,
+)
 from mitglied.service.mitglied_dto import MitgliedDTO
 
 __all__ = ["MitgliedWriteService"]
@@ -49,14 +53,17 @@ class MitgliedWriteService:
         logger.debug("mitglied_dto={}", mitglied_dto)
         return mitglied_dto
 
-    def update(self, mitglied: Mitglied, mitglied_id: int) -> MitgliedDTO:
+    def update(self, mitglied: Mitglied, mitglied_id: int, version: int) -> MitgliedDTO:
         """Ein Mitglied aktualisieren.
 
         :param mitglied: Die neuen Daten
         :param mitglied_id: ID des zu aktualisierenden Mitglieds
+        :param version: Version des zu aktualisierenden Mitglieds
         :return: Der aktualisierte Mitglied
         :rtype: MitgliedDTO
         :raises NotFoundError: Falls der zu aktualisierende Mitglied nicht existiert
+        :raises VersionOutdatedError: Falls die Version veraltet ist
+        :raises EmailExistsError: Falls die Emailadresse bereits existiert
         """
         logger.debug("mitglied_id={}, {}", mitglied_id, mitglied)
         with Session() as session:
@@ -66,6 +73,16 @@ class MitgliedWriteService:
                 )
             ) is None:
                 raise NotFoundError(mitglied_id)
+            if mitglied_db.version > version:
+                raise VersionOutdatedError(version)
+
+            email: Final = mitglied.email
+            if email != mitglied_db.email and self.repo.exists_email_other_id(
+                mitglied_id=mitglied_id,
+                email=email,
+                session=session,
+            ):
+                raise EmailExistsError(email)
 
             mitglied_db.set(mitglied)
 
@@ -75,8 +92,9 @@ class MitgliedWriteService:
                 )
             ) is None:
                 raise NotFoundError(mitglied_id)
-
-            session.commit()
             mitglied_dto: Final = MitgliedDTO(mitglied_updated)
             logger.debug("mitglied_dto={}", mitglied_dto)
+
+            session.commit()
+            mitglied_dto.version += 1
             return mitglied_dto
