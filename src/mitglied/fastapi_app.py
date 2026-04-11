@@ -12,6 +12,7 @@ from mitglied.entity.base import Base
 from mitglied.graphql_api import graphql_router
 from mitglied.repository.session_factory import engine
 from mitglied.router import mitglied_router, mitglied_write_router
+from mitglied.security.auth_router import router as auth_router
 from mitglied.service.exceptions import (
     EmailExistsError,
     ForbiddenError,
@@ -40,6 +41,8 @@ app.add_middleware(GZipMiddleware, minimum_size=500)
 app.include_router(mitglied_router, prefix="/rest")
 
 app.include_router(mitglied_write_router, prefix="/rest")
+
+app.include_router(auth_router, prefix="/auth")
 
 app.include_router(graphql_router, prefix="/graphql")
 

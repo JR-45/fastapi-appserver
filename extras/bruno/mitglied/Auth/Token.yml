@@ -1,0 +1,25 @@
+info:
+  name: Token
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: https://{{host}}/auth/token
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: |-
+      {
+        "username": "admin",
+        "password": "p"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
