@@ -9,10 +9,15 @@ from loguru import logger
 
 from mitglied.repository import Pageable, Slice
 from mitglied.router.page import Page
+from mitglied.security.role import Role
+from mitglied.security.roles_required import RolesRequired
 from mitglied.service import MitgliedService, MitgliedDTO
 from mitglied.router.dependencies import get_service
 
-router: Final = APIRouter(tags=["Mitglieder"])
+router: Final = APIRouter(
+    tags=["Mitglieder"],
+    dependencies=[Depends(RolesRequired([Role.ADMIN, Role.MITGLIED]))],
+)
 
 
 @router.get("")

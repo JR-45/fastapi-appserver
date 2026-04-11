@@ -9,12 +9,17 @@ from loguru import logger
 from mitglied.router.dependencies import get_write_service
 from mitglied.router.mitglied_model import MitgliedModel
 from mitglied.router.mitglied_update_model import MitgliedUpdateModel
+from mitglied.security.role import Role
+from mitglied.security.roles_required import RolesRequired
 from mitglied.service import MitgliedWriteService
 
 __all__ = ["mitglied_write_router"]
 
 
-mitglied_write_router: Final = APIRouter(tags=["Schreiben"])
+mitglied_write_router: Final = APIRouter(
+    tags=["Schreiben"],
+    dependencies=[Depends(RolesRequired(Role.ADMIN))],
+)
 
 
 @mitglied_write_router.post("")
