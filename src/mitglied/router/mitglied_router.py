@@ -3,11 +3,12 @@
 from dataclasses import asdict
 from typing import Annotated, Any, Final
 
-from fastapi import APIRouter, Depends, Request
-from fastapi.responses import JSONResponse
+from fastapi import APIRouter, Depends, Request, status
+from fastapi.responses import JSONResponse, Response
 from loguru import logger
 
 from mitglied.repository import Pageable, Slice
+from mitglied.router.constants import ETAG, IF_NONE_MATCH, IF_NONE_MATCH_MIN_LEN
 from mitglied.router.page import Page
 from mitglied.security.role import Role
 from mitglied.security.roles_required import RolesRequired
@@ -57,13 +58,33 @@ def get(
 
 @router.get("/{mitglied_id}")
 def get_by_id(
+    request: Request,
     mitglied_id: int,
     service: Annotated[MitgliedService, Depends(get_service)],
-) -> dict:
+) -> Response:
     """Suche mit der Mitglied-ID."""
     logger.debug("mitglied_id={}", mitglied_id)
     mitglied = service.find_by_id(mitglied_id=mitglied_id)
-    return {"mitglied": mitglied}
+    if_none_match: Final = request.headers.get(IF_NONE_MATCH)
+    if (
+        if_none_match is not None
+        and len(if_none_match) >= IF_NONE_MATCH_MIN_LEN
+        and if_none_match.startswith('"')
+        and if_none_match.endswith('"')
+    ):
+        version = if_none_match[1:-1]
+        logger.debug("version={}", version)
+        if version is not None:
+            try:
+                if int(version) == mitglied.version:
+                    return Response(status_code=status.HTTP_304_NOT_MODIFIED)
+            except ValueError:
+                logger.debug("invalid version={}", version)
+
+    return JSONResponse(
+        content=_mitglied_to_dict(mitglied),
+        headers={ETAG: f'"{mitglied.version}"'},
+    )
 
 
 def _mitglied_slice_to_page(
