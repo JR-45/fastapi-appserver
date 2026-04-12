@@ -19,11 +19,10 @@ from importlib.resources import files
 from importlib.resources.abc import Traversable
 from pathlib import Path
 from re import match
-from string import Template
 from typing import Final
 
 from loguru import logger
-from sqlalchemy import Connection, create_engine, text
+from sqlalchemy import create_engine, text
 
 from mitglied.config.config import resources_path
 from mitglied.config.db import (
@@ -114,35 +113,27 @@ class DbPopulateService:
     def _load_csv_files(self) -> None:
         logger.debug("begin")
         tabellen: Final = ["mitglied", "ausweis", "ausleihe"]
-        csv_path: Final = "/init/mitglied/csv"
-        # siehe extras/compose/postgres/compose.init.yml
-        with self.engine_admin.connect() as connection:
-            connection.execute(text("SET search_path TO mitglied;"))
+        project_root: Final = Path(__file__).parents[4]
+        csv_path: Final = project_root / "extras/compose/postgres/init/mitglied/csv"
+        raw_conn = engine.raw_connection()
+        try:
             for tabelle in tabellen:
-                self._load_csv_file(
-                    tabelle=tabelle,
-                    csv_path=csv_path,
-                    connection=connection,
-                )
-                connection.commit()
-        self.engine_admin.dispose()
+                self._load_csv_file(tabelle=tabelle, csv_path=csv_path, raw_conn=raw_conn)
+            raw_conn.commit()
+        finally:
+            raw_conn.close()
 
-    # Alternative zu COPY (PostgreSQL): pandas.load_csv() angeblich 5-7x langsamer
-    # https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html
-    # polars.read_csv() angeblich bis zu 10x schneller als Pandas
-    # + Rust als Implementierungssprache einschl. "Safe Concurrency"
-    # + Apache Arrow als effizientes Speicherformat
-    # https://docs.pola.rs/api/python/stable/reference/api/polars.read_csv.html
-    def _load_csv_file(
-        self, tabelle: str, csv_path: str, connection: Connection
-    ) -> None:
+    def _load_csv_file(self, tabelle: str, csv_path: Path, raw_conn) -> None:
         logger.debug("tabelle={}", tabelle)
-        copy_cmd: Final = Template(
-            "COPY ${TABELLE} FROM '"
-            + csv_path
-            + "/${TABELLE}.csv' (FORMAT csv, QUOTE '\"', DELIMITER ';', HEADER true, NULL 'null');",
-        ).substitute(TABELLE=tabelle)
-        connection.execute(text(copy_cmd))
+        csv_file: Final = csv_path / f"{tabelle}.csv"
+        copy_cmd: Final = (
+            f"COPY {tabelle} FROM STDIN "
+            "(FORMAT csv, QUOTE '\"', DELIMITER ';', HEADER true, NULL 'null')"
+        )
+        with raw_conn.cursor() as cur:
+            with cur.copy(copy_cmd) as copy:
+                with Path(csv_file).open(encoding=utf8) as f:
+                    copy.write(f.read())
 
 
 def get_db_populate_service() -> DbPopulateService:

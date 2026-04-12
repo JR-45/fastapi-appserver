@@ -8,6 +8,7 @@ from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.responses import JSONResponse
 from loguru import logger
 
+from mitglied.config.dev.db_populate import db_populate
 from mitglied.entity.base import Base
 from mitglied.graphql_api import graphql_router
 from mitglied.repository.session_factory import engine
@@ -31,7 +32,9 @@ if TYPE_CHECKING:
 @asynccontextmanager
 async def lifespan(_app: FastAPI) -> AsyncGenerator[None]:  # noqa: RUF029
     """Startup und Shutdown."""
+    Base.metadata.drop_all(bind=engine)
     Base.metadata.create_all(bind=engine)
+    db_populate()
     logger.info("Server startet...")
     yield
     logger.info("Server wird heruntergefahren...")

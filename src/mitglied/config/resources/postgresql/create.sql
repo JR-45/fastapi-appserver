@@ -17,8 +17,6 @@
 -- "There is no performance difference among these three types, apart from a few extra CPU cycles
 -- to check the length when storing into a length-constrained column"
 
-SET default_tablespace = mitgliedspace;
-
 CREATE TYPE geschlecht AS ENUM ('MAENNLICH', 'WEIBLICH', 'DIVERS');
 CREATE TYPE mitgliedsstatus AS ENUM ('AKTIV', 'INAKTIV');
 
