@@ -40,11 +40,11 @@ class Query:
             return MitgliedType.from_entity(m)
 
     @strawberry.field
-    def mitglieder(self) -> Sequence[MitgliedType]:
+    def mitglieder(self, page: int = 0, size: int = 5) -> Sequence[MitgliedType]:
         """Alle Mitglieder suchen."""
-        logger.debug("mitglieder")
+        logger.debug("mitglieder page={} size={}", page, size)
         with Session() as session:
-            pageable = Pageable(size=0, number=0)
+            pageable = Pageable(number=page, size=size)
             result = _repo.find_all(pageable=pageable, session=session)
             return [MitgliedType.from_entity(m) for m in result.content]
 
