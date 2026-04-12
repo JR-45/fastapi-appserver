@@ -9,6 +9,8 @@ http:
   headers:
     - name: Accept
       value: application/json
+    - name: If-None-Match
+      value: '"0"'
   params:
     - name: id
       value: "20"
