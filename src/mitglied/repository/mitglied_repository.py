@@ -1,4 +1,6 @@
-from collections.abc import Mapping, Sequence
+"""Modul für das MitgliedRepository."""
+
+from collections.abc import Mapping
 from typing import Final
 
 from loguru import logger
@@ -11,10 +13,10 @@ from mitglied.repository.slice import Slice
 
 
 class MitgliedRepository:
-    """Repository für Mitglied entity mit CRUD-Methoden"""
+    """Repository für Mitglied entity mit CRUD-Methoden."""
 
     def find_by_id(self, mitglied_id: int | None, session: Session) -> Mitglied | None:
-        """Suche nach Mitglied über die ID
+        """Suche nach Mitglied über die ID.
 
         :param mitglied_id: ID des Mitglieds
         :return: Mitglied oder None, falls nicht gefunden
@@ -121,6 +123,14 @@ class MitgliedRepository:
         pageable: Pageable,
         session: Session,
     ) -> Slice[Mitglied]:
+        """Suche nach Mitgliedern anhand des Nachnamens.
+
+        :param teil: Suchteil des Nachnamens
+        :param pageable: Pagination Parameter
+        :param session: Session für SQLAlchemy
+        :return: Slice mit gefundenen Mitgliedern
+        :rtype: Slice[Mitglied]
+        """
         logger.debug("teil={}", teil)
         offset = pageable.number * pageable.size
         statement: Final = (
@@ -145,6 +155,13 @@ class MitgliedRepository:
         return mitglied_slice
 
     def count_rows_nachname(self, teil: str, session: Session) -> int:
+        """Zähle Mitglieder anhand des Nachnamens.
+
+        :param teil: Suchteil des Nachnamens
+        :param session: Session für SQLAlchemy
+        :return: Anzahl der gefundenen Mitglieder
+        :rtype: int
+        """
         statement: Final = (
             select(func.count())
             .select_from(Mitglied)

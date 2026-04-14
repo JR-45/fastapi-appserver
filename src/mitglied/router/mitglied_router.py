@@ -8,11 +8,11 @@ from fastapi.responses import JSONResponse
 from loguru import logger
 
 from mitglied.repository import Pageable, Slice
+from mitglied.router.dependencies import get_service
 from mitglied.router.page import Page
 from mitglied.security.role import Role
 from mitglied.security.roles_required import RolesRequired
-from mitglied.service import MitgliedService, MitgliedDTO
-from mitglied.router.dependencies import get_service
+from mitglied.service import MitgliedDTO, MitgliedService
 
 router: Final = APIRouter(
     tags=["Mitglieder"],
@@ -84,10 +84,8 @@ def _mitglied_slice_to_page(
 def _mitglied_to_dict(mitglied: MitgliedDTO) -> dict[str, Any]:
     mitglied_dict: Final = asdict(obj=mitglied)
     mitglied_dict.pop("version")
-    mitglied_dict.update(
-        {
-            "geburtsdatum": mitglied.geburtsdatum.isoformat(),
-            "beitrittsdatum": mitglied.beitrittsdatum.isoformat(),
-        }
-    )
+    mitglied_dict.update({
+        "geburtsdatum": mitglied.geburtsdatum.isoformat(),
+        "beitrittsdatum": mitglied.beitrittsdatum.isoformat(),
+    })
     return mitglied_dict

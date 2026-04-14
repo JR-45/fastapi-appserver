@@ -1,7 +1,7 @@
 """DTO-Klasse für Mitgliedsdaten im Service-Ordner."""
 
 from dataclasses import dataclass
-from datetime import date, datetime
+from datetime import date
 
 import strawberry
 

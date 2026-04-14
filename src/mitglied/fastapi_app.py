@@ -58,7 +58,9 @@ app.include_router(
 
 
 @app.exception_handler(AuthorizationError)
-def authorization_error_handler(_request: Request, _err: AuthorizationError) -> Response:
+def authorization_error_handler(
+    _request: Request, _err: AuthorizationError
+) -> Response:
     """Errorhandler für AuthorizationError."""
     return JSONResponse(
         status_code=status.HTTP_401_UNAUTHORIZED,

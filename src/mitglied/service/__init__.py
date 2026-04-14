@@ -1,4 +1,4 @@
-"""Modul für den Geschäftslogik"""
+"""Modul für den Geschäftslogik."""
 
 from mitglied.service.exceptions import (
     EmailExistsError,
@@ -14,10 +14,10 @@ from mitglied.service.mitglied_write_service import MitgliedWriteService
 __all__ = [
     "EmailExistsError",
     "ForbiddenError",
-    "NotFoundError",
-    "UsernameExistsError",
-    "VersionOutdatedError",
     "MitgliedDTO",
     "MitgliedService",
     "MitgliedWriteService",
+    "NotFoundError",
+    "UsernameExistsError",
+    "VersionOutdatedError",
 ]

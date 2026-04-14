@@ -7,5 +7,5 @@ __all__: list[str] = ["app", "main"]
 
 
 def main():  # noqa: RUF067
-    """main Funktion fuer den Start der Anwendung"""
+    """Starte die Anwendung."""  # noqa: D401
     run()

@@ -23,6 +23,7 @@ from typing import Final
 
 from loguru import logger
 from sqlalchemy import create_engine, text
+from sqlalchemy.engine import Connection
 
 from mitglied.config.config import resources_path
 from mitglied.config.db import (
@@ -118,7 +119,9 @@ class DbPopulateService:
         raw_conn = engine.raw_connection()
         try:
             for tabelle in tabellen:
-                self._load_csv_file(tabelle=tabelle, csv_path=csv_path, raw_conn=raw_conn)
+                self._load_csv_file(
+                    tabelle=tabelle, csv_path=csv_path, raw_conn=raw_conn
+                )
             raw_conn.commit()
         finally:
             raw_conn.close()
@@ -130,10 +133,8 @@ class DbPopulateService:
             f"COPY {tabelle} FROM STDIN "
             "(FORMAT csv, QUOTE '\"', DELIMITER ';', HEADER true, NULL 'null')"
         )
-        with raw_conn.cursor() as cur:
-            with cur.copy(copy_cmd) as copy:
-                with Path(csv_file).open(encoding=utf8) as f:
-                    copy.write(f.read())
+        with raw_conn.cursor() as cur, cur.copy(copy_cmd) as copy:
+            copy.write(Path(csv_file).read_text(encoding=utf8))
 
 
 def get_db_populate_service() -> DbPopulateService:

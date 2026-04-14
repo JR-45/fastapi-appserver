@@ -1,7 +1,7 @@
 """Pydantic-Model zum Aktualisieren von Mitgliedsdaten."""
 
 from datetime import date
-from typing import Any, Annotated
+from typing import Annotated, Any
 
 from loguru import logger
 from pydantic import BaseModel, ConfigDict, EmailStr, StringConstraints
