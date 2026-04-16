@@ -30,18 +30,18 @@ base_script = "dependency-check"
 betriebssystem = get_platform()
 if betriebssystem in {"win-amd64", "win-arm64", "win32"}:
     base_exec_path = Path("C:/") / "Zimmermann"
-    extension = "bat"
     base_script += ".bat"
     base_data_path = Path("C:\\") / "Zimmermann"
 else:
-    base_exec_path = Path("Zimmermann")
-    base_data_path = Path("Zimmermann")
+    base_exec_path = Path.home() / "Zimmermann"
+    base_script += ".sh"
+    base_data_path = Path.home() / "Zimmermann"
 
 script = base_exec_path / "dependency-check" / "bin" / base_script
 print(f"script={script}")
 
 data_path = base_data_path / "dependency-check-data"
-pyproject_path = Path("..")
+pyproject_path = Path(".")
 report_path = "."
 
 options = " ".join([
