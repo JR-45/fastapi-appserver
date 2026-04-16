@@ -278,7 +278,7 @@ include = ["src/mitglied/service/*"]
 [tool.pytest.ini_options]
 minversion = "8.4.1"
 # fuer Unit-Tests
-pythonpath = ["src"]
+pythonpath = ["src", "tests/integration"]
 testpaths = ["tests/integration", "tests/unit"]
 # -m: nur Tests mit dem spezifizierten _Marker_ ausführen
 # -r A: zusaetzliche Zusammenfassung anzeigen (A = All)
