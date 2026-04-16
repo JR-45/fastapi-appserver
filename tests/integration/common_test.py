@@ -1,4 +1,4 @@
-# ruff: noqa: S101, D103
+# ruff: noqa: D103
 # Copyright (C) 2022 - present Juergen Zimmermann, Hochschule Karlsruhe
 #
 # This program is free software: you can redistribute it and/or modify
@@ -19,9 +19,9 @@
 from http import HTTPStatus
 from pathlib import Path
 from ssl import create_default_context
-from typing import Any, Final
+from typing import Final
 
-from httpx import get, post
+from httpx import post
 
 __all__ = [
     "base_url",
@@ -66,7 +66,6 @@ ctx = create_default_context(cafile=certificate)
 
 def check_readiness() -> None:
     """Readiness kontrolünü atla."""
-    pass
 
 
 def login(
@@ -113,9 +112,7 @@ def login_graphql(
 
 def db_populate() -> None:
     """DB-Populate überspringen."""
-    pass
 
 
 def keycloak_populate() -> None:
     """Keycloak-Populate überspringen."""
-    pass
