@@ -1,0 +1,68 @@
+' Copyright (C) 2019 - present Juergen Zimmermann, Hochschule Karlsruhe
+'
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+'
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+'
+' You should have received a copy of the GNU General Public License
+' along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+' Preview durch <Alt>d
+
+@startuml Komponenten
+
+left to right direction
+
+actor RESTClient
+actor GraphQLClient
+
+node "mitglied" {
+  [mitglied_router]
+  [mitglied_write_router]
+  [schema]
+
+  [mitglied_service]
+  [mitglied_write_service]
+
+  [mitglied_repository]
+
+}
+
+
+cloud {
+    [SQLAlchemy]
+}
+
+database "DB mitglied" {
+    [Tabelle mitglied]
+    [Tabelle ausweis]
+    [Tabelle ausleihe]
+}
+
+
+RESTClient ~~> [mitglied_router]
+RESTClient ~~> [mitglied_write_router]
+GraphQLClient ~~> [schema]
+
+[mitglied_router] ..> [mitglied_service]
+[mitglied_write_router] ..> [mitglied_write_service]
+[schema] ..> [mitglied_service]
+[schema] ..> [mitglied_write_service]
+[mitglied_service] ..> [mitglied_repository]
+[mitglied_write_service] ..> [mitglied_repository]
+
+[mitglied_repository] ~~> [SQLAlchemy]
+[SQLAlchemy] ~~> [Tabelle mitglied]
+[SQLAlchemy] ~~> [Tabelle ausweis]
+[SQLAlchemy] ~~> [Tabelle ausleihe]
+
+
+footer (c) Murat Yahsi, Jeton Rama
+
+@enduml

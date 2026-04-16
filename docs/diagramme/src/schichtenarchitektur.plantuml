@@ -1,0 +1,75 @@
+' Preview durch <Alt>d
+
+@startuml Schichtenarchitektur
+
+package mitglied #DDDDDD {
+    package router #FFFFFF {
+        [@router.get()\nget()\n\n@router.get()\nget_by_id()] as MitgliedReadRouter
+        [@router.post()\npost()\n\n@router.put()\nput()] as MitgliedWriteRouter
+
+        [MitgliedReadRouter] -right[hidden]-> [MitgliedWriteRouter]
+    }
+
+    package graphql_api #FFFFFF {
+        [Query\nmitglied()\nmitglieder()] as GraphQLQuery
+        [Mutation\ncreate()] as GraphQLMutation
+
+        [GraphQLQuery] -right[hidden]-> [GraphQLMutation]
+    }
+
+    package service #FFFFFF {
+        [find_by_id()\nfind()] as MitgliedService
+        [create()\nupdate()] as MitgliedWriteService
+    }
+
+    [MitgliedReadRouter] --> [MitgliedService]
+    [MitgliedWriteRouter] --> [MitgliedWriteService]
+    [GraphQLQuery] --> [MitgliedService]
+    [GraphQLMutation] --> [MitgliedWriteService]
+
+    package repository #FFFFFF {
+        [find_by_id()\nfind()\nfind_all()\nexists_email()\ncreate()\nupdate()] as MitgliedRepository
+    }
+
+    [MitgliedService] --> [MitgliedRepository]
+    [MitgliedWriteService] --> [MitgliedRepository]
+
+    package entity #FFFFFF {
+        [Mitglied]
+        [Ausweis]
+        [Ausleihe]
+
+        [Mitglied] -right[hidden]-> [Ausweis]
+        [Ausweis] -down[hidden]-> [Ausleihe]
+    }
+
+    [MitgliedReadRouter] ..> [Mitglied]
+    [MitgliedWriteRouter] ..> [Mitglied]
+    [MitgliedService] .left.> [Mitglied]
+    [MitgliedWriteService] ..> [Mitglied]
+    [MitgliedRepository] ..> [Mitglied]
+}
+
+RESTClient ~~> [MitgliedReadRouter]
+RESTClient ~~> [MitgliedWriteRouter]
+GraphQLClient ~~> [GraphQLQuery]
+GraphQLClient ~~> [GraphQLMutation]
+
+cloud {
+    [SQLAlchemy\n(OR-Mapping)] as SQLAlchemy
+}
+
+[MitgliedRepository] ~down~> [SQLAlchemy]
+entity ~~> [SQLAlchemy]
+
+database "DB mitglied" as db {
+    [Tabelle mitglied]
+    [Tabelle ausweis]
+    [Tabelle ausleihe]
+}
+
+[SQLAlchemy] ~down~> db
+
+footer (c) Murat Yahsi, Jeton Rama
+
+@enduml
