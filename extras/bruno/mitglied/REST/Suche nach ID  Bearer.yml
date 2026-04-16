@@ -1,0 +1,41 @@
+info:
+  name: Suche nach ID  Bearer
+  type: http
+  seq: 8
+
+http:
+  method: GET
+  url: "{{restUrl}}/:id"
+  headers:
+    - name: Accept
+      value: application/json
+    - name: If-None-Match
+      value: '"1"'
+  params:
+    - name: id
+      value: "20"
+      type: path
+  auth:
+    type: bearer
+    token: eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJIR1EtaU5qZEd1WnVHaFcxUVhTOWlMS2x5NFphSmZwTjBEVG9tTEVvNkRBIn0.eyJleHAiOjE3NzYzNDU1NjEsImlhdCI6MTc3NjM0Mzc2MSwianRpIjoib25ydHJvOjBkNzhhMmM3LTU4M2UtMDkwNS1hZjUyLWUwMTQxNTIxYzllYyIsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0Ojg4NDMvcmVhbG1zL3B5dGhvbiIsImF1ZCI6WyJyZWFsbS1tYW5hZ2VtZW50IiwiYWNjb3VudCJdLCJzdWIiOiI1OTc3YTJkMC0wNTNmLTRhMmEtYmE5Zi1lYWNjNTM4ZDczOWQiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJweXRob24tY2xpZW50Iiwic2lkIjoieEdaTTFBWVoxSzJLQmsxcm5tQ3pKR1NvIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwczovL2xvY2FsaG9zdDo4NDQzIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJkZWZhdWx0LXJvbGVzLXB5dGhvbiIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJyZWFsbS1tYW5hZ2VtZW50Ijp7InJvbGVzIjpbInZpZXctaWRlbnRpdHktcHJvdmlkZXJzIiwidmlldy1yZWFsbSIsIm1hbmFnZS1pZGVudGl0eS1wcm92aWRlcnMiLCJpbXBlcnNvbmF0aW9uIiwicmVhbG0tYWRtaW4iLCJjcmVhdGUtY2xpZW50IiwibWFuYWdlLXVzZXJzIiwicXVlcnktcmVhbG1zIiwidmlldy1hdXRob3JpemF0aW9uIiwicXVlcnktY2xpZW50cyIsInF1ZXJ5LXVzZXJzIiwibWFuYWdlLWV2ZW50cyIsIm1hbmFnZS1yZWFsbSIsInZpZXctZXZlbnRzIiwidmlldy11c2VycyIsInZpZXctY2xpZW50cyIsIm1hbmFnZS1hdXRob3JpemF0aW9uIiwibWFuYWdlLWNsaWVudHMiLCJxdWVyeS1ncm91cHMiXX0sInB5dGhvbi1jbGllbnQiOnsicm9sZXMiOlsiYWRtaW4iXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6IlB5dGhvbiBBZG1pbiIsInByZWZlcnJlZF91c2VybmFtZSI6ImFkbWluIiwiZ2l2ZW5fbmFtZSI6IlB5dGhvbiIsImZhbWlseV9uYW1lIjoiQWRtaW4iLCJlbWFpbCI6ImFkbWluQGFjbWUuY29tIn0.ecTUjbQGA7ISB8ILcICx0m4jUy8QNb_869Bywceq0Cji4MUtxUgXq3c17U_23vMaHfeGUL-Cz4-2qfp0ymNlJOELYn9O9u166Mc1UTt0QBLDK5LU4kIEiYWJzxelh6zxrbrtD2o4vEccxqqwBGN0Ob228bK9jEnRRk_fJrMkNYUMwZ0HezAFy6Ha8kibERT1KhM7oHt9qZRbzcQOGQAoaauCNpfKesHIycMSoGWR7MSvXPVfg8OoxhN-tLiH6jOb0Ap-XHcZaYfjpMRoNpfEhVm1MzgRm3hJJoqXABSU2DCmmaVXUBn0MQHt5FssyxEz0kHnakM5dSjdLShYUTsZBA
+
+runtime:
+  variables:
+    - name: restUrl
+      value: https://127.0.0.1:8000/rest
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "200"
+    - expression: res.headers['content-type']
+      operator: eq
+      value: application/json
+    - expression: res.body.id
+      operator: eq
+      value: "1"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

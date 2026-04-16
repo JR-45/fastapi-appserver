@@ -5,35 +5,30 @@ info:
 
 graphql:
   method: POST
-  url: "{{restUrl}}"
+  url: https://127.0.0.1:8000/graphql
   body:
     query: |-
       mutation {
-        create(mitgliedInput: {
-          vorname: "Francis"
-          nachname: "Powers"
-          email: "u2pilot@cia.gov"
-          geburtsdatum: "1929-08-17"
-          telefonnummer: "+49-800-19600501"
-          beitrittsdatum: "2026-01-01"
-          geschlecht: MAENNLICH
-          mitgliedsstatus: AKTIV
-          ausweis: {
-            ausstellungsdatum: "2026-01-01"
-            ablaufdatum: "2028-01-01"
-          }
-        }) {
+        create(
+          mitgliedInput: {
+            vorname: "Elon"
+            nachname: "Musk"
+            email: "tesla@test.graphql"
+            geburtsdatum: "1989-02-02"
+            telefonnummer: "01234123412"
+            geschlecht: MAENNLICH
+            mitgliedsstatus: INAKTIV
+            beitrittsdatum: "2023-01-31",
+            interessen: [ROMAN]
+            ausweis: {
+          		ausstellungsdatum: "2023-01-31",
+          		ablaufdatum: "2028-01-31"
+            }
+       }
+        ) {
           id
         }
       }
-  auth:
-    type: bearer
-    token: eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIybUNBVy1wR29ZMzRweUVscm5mTG9va1FVeXhjdWp4WmNSZGloREF3OEhNIn0.eyJleHAiOjE3NzYwMjM2NTcsImlhdCI6MTc3NjAyMTg1NywianRpIjoib25ydHJvOjM4MzhhNGVmLTRjYTMtNjRlOC05MTIwLTdlNWQxZDA4ZDljNCIsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0Ojg4NDMvcmVhbG1zL3B5dGhvbiIsImF1ZCI6WyJyZWFsbS1tYW5hZ2VtZW50IiwiYWNjb3VudCJdLCJzdWIiOiIwZTMzMTBhYi1mZWYwLTQ3YzYtYTM5OC0zOGYwYjE5M2VjMWYiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJweXRob24tY2xpZW50Iiwic2lkIjoiUHB4YkE0ekxqbEJPaWxORWQ5UWpoMTcwIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6W10sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJkZWZhdWx0LXJvbGVzLXB5dGhvbiIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJyZWFsbS1tYW5hZ2VtZW50Ijp7InJvbGVzIjpbInZpZXctcmVhbG0iLCJ2aWV3LWlkZW50aXR5LXByb3ZpZGVycyIsIm1hbmFnZS1pZGVudGl0eS1wcm92aWRlcnMiLCJpbXBlcnNvbmF0aW9uIiwicmVhbG0tYWRtaW4iLCJjcmVhdGUtY2xpZW50IiwibWFuYWdlLXVzZXJzIiwicXVlcnktcmVhbG1zIiwidmlldy1hdXRob3JpemF0aW9uIiwicXVlcnktY2xpZW50cyIsInF1ZXJ5LXVzZXJzIiwibWFuYWdlLWV2ZW50cyIsIm1hbmFnZS1yZWFsbSIsInZpZXctZXZlbnRzIiwidmlldy11c2VycyIsInZpZXctY2xpZW50cyIsIm1hbmFnZS1hdXRob3JpemF0aW9uIiwibWFuYWdlLWNsaWVudHMiLCJxdWVyeS1ncm91cHMiXX0sInB5dGhvbi1jbGllbnQiOnsicm9sZXMiOlsiYWRtaW4iXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsIm5hbWUiOiJQeXRob24gQWRtaW4iLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJhZG1pbiIsImdpdmVuX25hbWUiOiJQeXRob24iLCJmYW1pbHlfbmFtZSI6IkFkbWluIiwiZW1haWwiOiJhZG1pbkBhY21lLmNvbSJ9.ajfhGgGPf2gXo8a3OsJS6iztUx-C_N_fPOIIMN8TI4BKS4_9qsthYcVjHJEBsakaYrTvVtawJjgp-hTcF4gx1_G1RClX_3eml3yYjz1W8YOkVhex_OHpDgBMV3t4RebTBhMYyfWONYETPeoaFLpRyhtHh_NOKdtcE5XYh1VXWD0oxRiE6rZRWvJaovlLO_ZEuM2Q-EfHwoiow9SCSBOrbW1cAqEKEk8lPWuWyvs7kJrFYP_2OelC-gtHN7qoPSRBC5KMZbZgWauO6DvvKIGbqihqRxyZlWmSVEuoUoIlNPrDvDGtZXHt2a8WVO-hTUwLNJCRTNCet5wQdOQ9AkGrfA
-
-runtime:
-  variables:
-    - name: restUrl
-      value: https://127.0.0.1:8000/graphql
 
 settings:
   encodeUrl: true

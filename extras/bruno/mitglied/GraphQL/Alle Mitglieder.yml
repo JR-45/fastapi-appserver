@@ -5,31 +5,17 @@ info:
 
 graphql:
   method: POST
-  url: "{{restUrl}}"
+  url: https://127.0.0.1:8000/graphql
   body:
-    query: |-
+    query: |
       {
-        mitglieder(page: 0, size: 5) {
+        mitglieder {
           id
           vorname
           nachname
           email
-          geburtsdatum
-          telefonnummer
-          geschlecht
-          mitgliedsstatus
-          beitrittsdatum
-          interessen
         }
       }
-  auth:
-    type: bearer
-    token: eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIybUNBVy1wR29ZMzRweUVscm5mTG9va1FVeXhjdWp4WmNSZGloREF3OEhNIn0.eyJleHAiOjE3NzYwMjQ2NzAsImlhdCI6MTc3NjAyMjg3MCwianRpIjoib25ydHJvOjg1MTI0NDE5LWVlMmItNzUzNS1kYjI3LTRmMzQyYmE3MTliZiIsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0Ojg4NDMvcmVhbG1zL3B5dGhvbiIsImF1ZCI6WyJyZWFsbS1tYW5hZ2VtZW50IiwiYWNjb3VudCJdLCJzdWIiOiIwZTMzMTBhYi1mZWYwLTQ3YzYtYTM5OC0zOGYwYjE5M2VjMWYiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJweXRob24tY2xpZW50Iiwic2lkIjoibk5CekR0V2pPZTNkRlVMUC1WYmRNTmIwIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6W10sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJkZWZhdWx0LXJvbGVzLXB5dGhvbiIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJyZWFsbS1tYW5hZ2VtZW50Ijp7InJvbGVzIjpbInZpZXctcmVhbG0iLCJ2aWV3LWlkZW50aXR5LXByb3ZpZGVycyIsIm1hbmFnZS1pZGVudGl0eS1wcm92aWRlcnMiLCJpbXBlcnNvbmF0aW9uIiwicmVhbG0tYWRtaW4iLCJjcmVhdGUtY2xpZW50IiwibWFuYWdlLXVzZXJzIiwicXVlcnktcmVhbG1zIiwidmlldy1hdXRob3JpemF0aW9uIiwicXVlcnktY2xpZW50cyIsInF1ZXJ5LXVzZXJzIiwibWFuYWdlLWV2ZW50cyIsIm1hbmFnZS1yZWFsbSIsInZpZXctZXZlbnRzIiwidmlldy11c2VycyIsInZpZXctY2xpZW50cyIsIm1hbmFnZS1hdXRob3JpemF0aW9uIiwibWFuYWdlLWNsaWVudHMiLCJxdWVyeS1ncm91cHMiXX0sInB5dGhvbi1jbGllbnQiOnsicm9sZXMiOlsiYWRtaW4iXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsIm5hbWUiOiJQeXRob24gQWRtaW4iLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJhZG1pbiIsImdpdmVuX25hbWUiOiJQeXRob24iLCJmYW1pbHlfbmFtZSI6IkFkbWluIiwiZW1haWwiOiJhZG1pbkBhY21lLmNvbSJ9.FZLHi1f5T8ZFH8VCCgWwceZPqW5w2DI5xFpRAINeETBle1lbB58osn9Rlttgk5EKZMZE7LL10BJzflHipqhZxTSwuwGpZqpQaBDD4W0vnY7XZAqVZ-OE-xmzvtvaqeoJpiUh6fNAKiwmboMh9po1gt-AVnHBqVswq_kMkMh6UKOXP0tuEDdVdynCGPBDIsYg6rXUrJp9xyjEwQlkGBjOjqLPRkp_bQEQ5JIDhUjmsVSZkv22yyY0DTqlxG6TUSSskJik8HxIjXxvf8Ya_EhwvSisQjVxvjtWMTNYi5zqk80G66iQvKqUwWVLrFGLBIXuCJvwQAdSZ3aWpwWBfg0scg
-
-runtime:
-  variables:
-    - name: restUrl
-      value: https://127.0.0.1:8000/graphql
 
 settings:
   encodeUrl: true
