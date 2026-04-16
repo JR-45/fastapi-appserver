@@ -1,5 +1,6 @@
 """Lasttest mit Locust."""
 
+import os
 from typing import Final, Literal
 
 import urllib3
@@ -17,7 +18,11 @@ class GetUser(HttpUser):
         """Token holen."""
         self.client.verify = False
         response: Final = self.client.post(
-            url="/auth/token", json={"username": "admin", "password": "p"}
+            url="/auth/token",
+            json={
+                "username": os.getenv("LOCUST_USERNAME", "admin"),
+                "password": os.getenv("LOCUST_PASSWORD"),
+            },
         )
         body: Final[dict[Literal["token"], str]] = response.json()
         token: Final = body["token"]
