@@ -23,7 +23,7 @@ import subprocess  # noqa: S404
 from pathlib import Path
 from sysconfig import get_platform
 
-nvd_api_key = "47fbc0a4-9240-4fda-9a26-d7d5624c16bf"
+nvd_api_key = "YOUR_API_KEY"
 project = "FastAPI"
 
 base_script = "dependency-check"
@@ -44,41 +44,43 @@ data_path = base_data_path / "dependency-check-data"
 pyproject_path = Path(".")
 report_path = "."
 
-options = " ".join([
-    f"--nvdApiKey {nvd_api_key} --project {project} --scan {pyproject_path}",
-    f"--suppression extras/suppression.xml --out {report_path} --data {data_path}",
-    # dependency-check.bat --advancedHelp
-    "--disableArchive",
-    "--disableAssembly",
-    "--disableAutoconf",
-    "--disableBundleAudit",
-    "--disableCarthageAnalyzer",
-    "--disableCentral",
-    "--disableCentralCache",
-    "--disableCmake",
-    "--disableCocoapodsAnalyzer",
-    "--disableComposer",
-    "--disableCpan",
-    "--disableDart",
-    "--disableGolangDep",
-    "--disableGolangMod",
-    "--disableJar",
-    "--disableMavenInstall",
-    "--disableMixAudit",
-    "--disableMSBuild",
-    "--disableNodeAudit",
-    "--disableNodeAuditCache",
-    "--disableNodeJS",
-    "--disableNugetconf",
-    "--disableNuspec",
-    "--disableOssIndex",
-    "--disablePipfile",
-    "--disablePnpmAudit",
-    "--disableRubygems",
-    "--disableSwiftPackageManagerAnalyzer",
-    "--disableSwiftPackageResolvedAnalyzer",
-    "--disableYarnAudit",
-])
+options = " ".join(
+    [
+        f"--nvdApiKey {nvd_api_key} --project {project} --scan {pyproject_path}",
+        f"--suppression extras/suppression.xml --out {report_path} --data {data_path}",
+        # dependency-check.bat --advancedHelp
+        "--disableArchive",
+        "--disableAssembly",
+        "--disableAutoconf",
+        "--disableBundleAudit",
+        "--disableCarthageAnalyzer",
+        "--disableCentral",
+        "--disableCentralCache",
+        "--disableCmake",
+        "--disableCocoapodsAnalyzer",
+        "--disableComposer",
+        "--disableCpan",
+        "--disableDart",
+        "--disableGolangDep",
+        "--disableGolangMod",
+        "--disableJar",
+        "--disableMavenInstall",
+        "--disableMixAudit",
+        "--disableMSBuild",
+        "--disableNodeAudit",
+        "--disableNodeAuditCache",
+        "--disableNodeJS",
+        "--disableNugetconf",
+        "--disableNuspec",
+        "--disableOssIndex",
+        "--disablePipfile",
+        "--disablePnpmAudit",
+        "--disableRubygems",
+        "--disableSwiftPackageManagerAnalyzer",
+        "--disableSwiftPackageResolvedAnalyzer",
+        "--disableYarnAudit",
+    ]
+)
 print(f"options={options}")
 print()
 
