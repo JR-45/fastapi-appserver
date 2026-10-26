@@ -1,7 +1,7 @@
 opencollection: 1.0.0
 
 info:
-  name: mitglied
+  name: mitglied (fastapi)
 config:
   proxy:
     inherit: true
