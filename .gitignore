@@ -34,3 +34,4 @@ extras/compose/postgres/init/tls/
 extras/compose/postgres/tls/
 extras/compose/postgres/password.txt
 extras/compose/keycloak/tls/
+.DS_Store
